@@ -7,7 +7,7 @@ module.exports = (app) => {
   app.get('/api/pokemons', (req, res) => {
     if(req.query.name) {
       const name = req.query.name
-      return Pokemon.findAll({ 
+      return Pokemon.findAndCountAll({ 
         where: { 
           name: {
             [Op.or]: {
@@ -16,11 +16,11 @@ module.exports = (app) => {
             }
           }
         },
-        limit: 5 
+        limit: 3 
       })
-      .then(pokemons => {
-        const message = `Il y a ${pokemons.length} pokémon(s) qui correspondent au terme de recherche ${name}.`
-        return res.json({ message, data: pokemons })
+      .then(({count, rows}) => {
+        const message = `Il y a ${count} pokémon(s) qui correspondent au terme de recherche ${name}.`
+        return res.json({ message, data: rows })
       })
     } 
     else {
