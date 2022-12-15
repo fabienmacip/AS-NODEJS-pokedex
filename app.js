@@ -1,7 +1,8 @@
 const express = require('express')
 //const morgan = require('morgan')
-const favicon = require('serve-favicon');
-const bodyParser = require('body-parser');
+const favicon = require('serve-favicon')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const sequelize = require('./src/db/sequelize')
  
 const app = express()
@@ -11,6 +12,7 @@ app
 .use(favicon(__dirname + '/favicon.ico'))
 //.use(morgan('dev'))
 .use(bodyParser.json())
+.use(cors())
  
 sequelize.initDb()
  
