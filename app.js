@@ -16,7 +16,7 @@ sequelize.initDb()
  
 // test HEROKU
 app.get('/', (req, res) => {
-  res.json('Hello, Heroku ! <img draggable="false" role="img" class="emoji" alt="" src="https://s.w.org/images/core/emoji/13.0.1/svg/1f44b.svg">')
+  res.json('Hello, Heroku !')
 })
 
 // Ici, nous placerons nos futurs points de terminaisons !
