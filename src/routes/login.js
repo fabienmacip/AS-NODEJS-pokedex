@@ -1,6 +1,8 @@
 const { User } = require('../db/sequelize')
 const bcrypt = require('bcrypt')
- 
+const jwt = require('jsonwebtoken') 
+const privateKey = require('../auth/private_key')
+
 module.exports = (app) => {
   app.post('/api/login', (req, res) => {
  
@@ -16,9 +18,16 @@ module.exports = (app) => {
           const message = `Le mot de passe est incorrect.`
           return res.status(401).json({ message })
         }
+
+        // Générer un nouveau jeton JWT, valide pendant 24 heures.
+        const token = jwt.sign(
+          { userId: user.id },
+          privateKey,
+          { expiresIn: '24h' }
+        )       
  
         const message = `L'utilisateur a été connecté avec succès`;
-        return res.json({ message, data: user })
+        return res.json({ message, data: user, token })
       })
     })
     .catch(error => {
