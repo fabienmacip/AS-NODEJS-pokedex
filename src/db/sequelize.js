@@ -4,15 +4,43 @@ const PokemonModel = require('../models/pokemon')
 const UserModel = require('../models/user')
 const pokemons = require('./mock-pokemon')
  
-const sequelize = new Sequelize('pokedex', 'root', '', {
+/* const sequelize = new Sequelize('pokedex', 'root', '', {
   host: '127.0.0.1',
   dialect: 'mariadb',
   dialectOptions: {
     timezone: 'Etc/GMT-2',
   },
   logging: true
-})
+}) */
  
+
+// NOUVELLE CONNEXION BDD
+
+if(process.env.NODE_ENV === 'production') {
+  // Saisissez également vos nouveaux identifiants pour la production :
+  sequelize = new Sequelize('pokedex', 'root', '', {
+    host: '127.0.0.1',
+    dialect: 'mariadb',
+    dialectOptions: {
+      timezone: 'Etc/GMT-2',
+    },
+    logging: true
+  })
+} else {
+  sequelize = new Sequelize('pokedex', 'root', '', {
+    host: '127.0.0.1',
+    dialect: 'mariadb',
+    dialectOptions: {
+      timezone: 'Etc/GMT-2',
+    },
+    logging: true
+  })
+   
+}
+
+// FIN NOUVELLE CONNEXION BDD
+
+
 const Pokemon = PokemonModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes) 
 
